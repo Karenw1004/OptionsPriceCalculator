@@ -1,5 +1,18 @@
-from flask import Flask, render_template,jsonify
+from flask import Flask, render_template,jsonify,Blueprint
+from flask_cors import CORS, cross_origin
+import os
+from dotenv import load_dotenv
+
 app = Flask(__name__)
+load_dotenv(verbose=True)
+#need SECRET_KEY to encrypt cookies and save send them to the browser
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+
+# need CORS(cross origin requests) 
+# Explanation can be found at documentation
+CORS(app)
+
+#Register the blueprints(get and post)
 
 @app.route("/")
 def index():
