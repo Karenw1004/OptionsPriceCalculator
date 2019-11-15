@@ -3,6 +3,8 @@ from flask_cors import CORS, cross_origin
 import os
 from dotenv import load_dotenv
 from flask_pymongo import PyMongo
+import math
+
 app = Flask(__name__)
 load_dotenv(verbose=True)
 #need SECRET_KEY to encrypt cookies and save send them to the browser
@@ -14,11 +16,11 @@ app.config["MONGO_URI"] = os.getenv("MONGO_URI")
 # Explanation can be found at documentation
 CORS(app)
 
-#TODO:Register the blueprints(get and post)
-mongo = PyMongo(app,retryWrites=False)
+#TODO:Register the blueprints(get and post) from routes for CODE MODULARITY
+mongo = PyMongo(app,retryWrites=False,connect=True)
 @app.route("/all",methods=["GET"])
 def all():
-    # #collection name
+    #collection name
     price = mongo.db.price
     price_all = price.find({})
     data = []
@@ -27,6 +29,26 @@ def all():
         element['_id'] = str(element['_id'])
         data.append(element)
     return jsonify({ "data" : data })
+
+
+@app.route("/new",methods=["POST"])
+def new():
+    #collection name
+    price = mongo.db.price
+    #get the json file
+    data = request.json
+    time_ratio = 0.0
+    time_ratio = data["time"]["days"] / 365
+    price_approx = 0.4 * data["volatility"] * math.sqrt(time_ratio) * data["stockPrice"]
+    new_data = {
+        "volatility"    :   data["volatility"] ,
+        "timeRatio"     :   time_ratio,
+        "stockPrice"    :   data["stockPrice"],
+        "vanillaOption" :   price_approx
+    }
+    price.insert_one(new_data)
+    return jsonify({"success" : True})
+
 
 @app.route("/")
 def index():
