@@ -20,3 +20,9 @@
 .App-link {
   color: #09d3ac;
 }
+
+.vanillaForm{
+  border: 2px solid black;
+  margin-top: 25px;
+  
+}
