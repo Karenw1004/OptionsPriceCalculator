@@ -26,7 +26,7 @@ def all():
     data = []
     for element in price_all:
         element['_id'] = str(element['_id'])
-        data.applicationend(element)
+        data.append(element)
     return jsonify({ "data" : data })
 
 
@@ -38,7 +38,7 @@ def latest():
     data = []
     for element in price_all:
         element['_id'] = str(element['_id'])
-        data.applicationend(element)
+        data.append(element)
     return jsonify({ "newestData" : data[-1] })
 
 
