@@ -23,6 +23,8 @@
 
 .vanillaForm{
   border: 2px solid black;
-  margin-top: 25px;
+  border-radius: .5em;
+  margin-top: 100px;
+
   
 }
