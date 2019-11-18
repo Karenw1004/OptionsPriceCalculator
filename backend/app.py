@@ -16,7 +16,7 @@ application.config["MONGO_URI"] = os.getenv("MONGO_URI")
 # Explanation can be found at documentation
 CORS(application)
 
-#TODO:Register the blueprints(get and post) from routes for CODE MODULARITY
+#FURTHER TODO:Register the blueprints(get and post) from routes for CODE MODULARITY
 mongo = PyMongo(application,retryWrites=False,connect=True)
 @application.route("/all",methods=["GET"])
 def all():
@@ -24,6 +24,7 @@ def all():
     price = mongo.db.price
     price_all = price.find({})
     data = []
+    #get all the data in the db
     for element in price_all:
         element['_id'] = str(element['_id'])
         data.append(element)
@@ -39,6 +40,7 @@ def latest():
     for element in price_all:
         element['_id'] = str(element['_id'])
         data.append(element)
+    #GET only the last data in the array
     return jsonify({ "newestData" : data[-1] })
 
 
