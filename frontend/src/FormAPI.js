@@ -56,14 +56,14 @@ export const FormAPI = ({onNewValue}) => {
             volatility: (Number(volatility)/100),
             time: {days: Number(days)}};
 
-        const response = await fetch("/new" , {
+        const response = await fetch("http://flaskveta.us-east-2.elasticbeanstalk.com/new" , {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(vanillaPrice)
         });
         if(response.ok){
             var latest = {};
-            await fetch("/latest").then(
+            await fetch("http://flaskveta.us-east-2.elasticbeanstalk.com/latest").then(
                 response => response.json().then( 
               givenData => {
                 latest = (givenData.newestData);

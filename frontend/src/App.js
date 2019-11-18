@@ -8,7 +8,7 @@ function App(){
   const [vanilla, setVanilla ] = useState([]);
 
   useEffect( () => {
-    fetch("/all")
+    fetch("http://flaskveta.us-east-2.elasticbeanstalk.com/all")
     .then(response => response.json().then( 
       givenData => {
         setVanilla(givenData.data);
